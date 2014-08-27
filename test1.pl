@@ -1,39 +1,39 @@
 use strict;
 use warnings;
 use locale;
-use Text::Format; # чтобы не изобретать велоспиед с форматированием (ну да, Laziness, Impatience and Hubris)
+use Text::Format; # С‡С‚РѕР±С‹ РЅРµ РёР·РѕР±СЂРµС‚Р°С‚СЊ РІРµР»РѕСЃРїРёРµРґ СЃ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµРј (РЅСѓ РґР°, Laziness, Impatience and Hubris)
 
-# Массив абзацев (например)
+# РњР°СЃСЃРёРІ Р°Р±Р·Р°С†РµРІ (РЅР°РїСЂРёРјРµСЂ)
 my @txt = (
 q(This is the header),
 q(Text::Wrap::wrap() starts its work by expanding all the tabs in its input into spaces. The last thing it does it to turn spaces back into tabs. If you do not want tabs in your results, set $Text::Wrap::unexpand to a false value. Likewise if you do not want to use 8-character tabstops, set $Text::Wrap::tabstop to the number of characters you do want for your tabstops.),
 q(The format routine will format under all circumstances even if the width isn't enough to contain the longest words. Text::Wrap will die under these circumstances, although I am told this is fixed. If columns is set to a small number and words are longer than that and the leading 'whitespace' than there will be a single word on each line. This will let you make a simple word list which could be indented or right aligned. There is a chance for croaking if you try to subvert the module. If you don't pass in text then the internal text is worked on, though not modfied.),
-q(На Хабре уже несколько раз упоминали летающие транспортные средства, включая летающий мотоцикл от Криса Эллоя. Еще в 2011 году этот инженер представил собственный вариант летающего мотоцикла, Hoverbike, а сейчас он собирает средства на промышленную реализацию своего проекта. ),
+q(РќР° РҐР°Р±СЂРµ СѓР¶Рµ РЅРµСЃРєРѕР»СЊРєРѕ СЂР°Р· СѓРїРѕРјРёРЅР°Р»Рё Р»РµС‚Р°СЋС‰РёРµ С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹Рµ СЃСЂРµРґСЃС‚РІР°, РІРєР»СЋС‡Р°СЏ Р»РµС‚Р°СЋС‰РёР№ РјРѕС‚РѕС†РёРєР» РѕС‚ РљСЂРёСЃР° Р­Р»Р»РѕСЏ. Р•С‰Рµ РІ 2011 РіРѕРґСѓ СЌС‚РѕС‚ РёРЅР¶РµРЅРµСЂ РїСЂРµРґСЃС‚Р°РІРёР» СЃРѕР±СЃС‚РІРµРЅРЅС‹Р№ РІР°СЂРёР°РЅС‚ Р»РµС‚Р°СЋС‰РµРіРѕ РјРѕС‚РѕС†РёРєР»Р°, Hoverbike, Р° СЃРµР№С‡Р°СЃ РѕРЅ СЃРѕР±РёСЂР°РµС‚ СЃСЂРµРґСЃС‚РІР° РЅР° РїСЂРѕРјС‹С€Р»РµРЅРЅСѓСЋ СЂРµР°Р»РёР·Р°С†РёСЋ СЃРІРѕРµРіРѕ РїСЂРѕРµРєС‚Р°. ),
 );
 
-# Установить количество столбцов (ширину текста)
+# РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ (С€РёСЂРёРЅСѓ С‚РµРєСЃС‚Р°)
 my $columns      = 70;
-# Установить отступ первой строки абзаца
+# РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РѕС‚СЃС‚СѓРї РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё Р°Р±Р·Р°С†Р°
 my $first_indent = 4;
 
 my $text = Text::Format->new ({
     columns     => $columns,
     firstIndent => $first_indent,
-    justify     => 1, # выравнивание по ширине
-    leftMargin  => 0, # отступ слева до текста
-    rightMargin => 0, # отступ справа до текста
-    bodyIndent  => 0, # отступ до основного текста ("тела" текста)
+    justify     => 1, # РІС‹СЂР°РІРЅРёРІР°РЅРёРµ РїРѕ С€РёСЂРёРЅРµ
+    leftMargin  => 0, # РѕС‚СЃС‚СѓРї СЃР»РµРІР° РґРѕ С‚РµРєСЃС‚Р°
+    rightMargin => 0, # РѕС‚СЃС‚СѓРї СЃРїСЂР°РІР° РґРѕ С‚РµРєСЃС‚Р°
+    bodyIndent  => 0, # РѕС‚СЃС‚СѓРї РґРѕ РѕСЃРЅРѕРІРЅРѕРіРѕ С‚РµРєСЃС‚Р° ("С‚РµР»Р°" С‚РµРєСЃС‚Р°)
 });
 
-# Пробежать по всем абзацам
+# РџСЂРѕР±РµР¶Р°С‚СЊ РїРѕ РІСЃРµРј Р°Р±Р·Р°С†Р°Рј
 for ( @txt ) {
-	# Если длина строки (абзаца) меньше половины ширины текста,
-	# то её не обрабатывать
+	# Р•СЃР»Рё РґР»РёРЅР° СЃС‚СЂРѕРєРё (Р°Р±Р·Р°С†Р°) РјРµРЅСЊС€Рµ РїРѕР»РѕРІРёРЅС‹ С€РёСЂРёРЅС‹ С‚РµРєСЃС‚Р°,
+	# С‚Рѕ РµС‘ РЅРµ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ
     if ( length($_) < $columns / 2 ) {
 		print "$_\n";
     }
     else {
-    	# Сделать красиво...
+    	# РЎРґРµР»Р°С‚СЊ РєСЂР°СЃРёРІРѕ...
 		print $text->format( [$_] );
     };
 };
